@@ -143,14 +143,22 @@ func (b *Builder) handleArtifacts() error {
 		return errors.New("no artifact")
 	}
 
-	artifactsSlice := strings.Split(output, "\n")
-	fmt.Printf("[JOB_OUT] ARTIFACT = %s\n", strings.Join(artifactsSlice, ";"))
+	//artifactsSlice := strings.Split(output, "\n")
+	fmt.Printf("[JOB_OUT] ARTIFACT = %s\n", output)
 
 	if b.HubRepo == "" {
 		fmt.Println("HUB_REPO is empty, no need upload artifacts")
 		return nil
 	}
 
+	command = []string{"mv", output,"./app.tar.gz"}
+	(CMD{command, targetPath}).Run()
+	command = []string{"find", "./", "-name", "app.tar.gz"}
+	output, err = (CMD{command, targetPath}).Run()
+	if err != nil {
+		fmt.Println("Run find artifacts failed:", err)
+		return err
+	}
 	artifactsTar := fmt.Sprintf("%s.tar.gz", b.projectName)
 
 	//command = []string{"tar", "-cjf", artifactsTar}
