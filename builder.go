@@ -151,7 +151,7 @@ func (b *Builder) handleArtifacts() error {
 		return nil
 	}
 
-	command = []string{"mv", output,"./app.tar.gz"}
+	command = []string{"mv", output, "./app.tar.gz"}
 	(CMD{command, targetPath}).Run()
 	command = []string{"find", "./", "-name", "app.tar.gz"}
 	output, err = (CMD{command, targetPath}).Run()
@@ -159,7 +159,7 @@ func (b *Builder) handleArtifacts() error {
 		fmt.Println("Run find artifacts failed:", err)
 		return err
 	}
-	artifactsTar := fmt.Sprintf("%s.tar.gz", b.projectName)
+	artifactsTar := "app.tar.gz"
 
 	//command = []string{"tar", "-cjf", artifactsTar}
 	//command = append(command, artifactsSlice...)
